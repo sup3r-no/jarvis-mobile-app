@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import * as Permissions from 'expo-permissions';
-import * as MediaLibrary from 'expo-media-library';
 import { Platform, Alert } from 'react-native';
 
 export type PermissionStatus = 'granted' | 'denied' | 'undetermined';
@@ -8,20 +7,18 @@ export type PermissionStatus = 'granted' | 'denied' | 'undetermined';
 export interface PermissionsState {
   microphone: PermissionStatus;
   notifications: PermissionStatus;
-  mediaLibrary: PermissionStatus;
   isLoading: boolean;
   error: string | null;
 }
 
 /**
- * Hook to manage app permissions for microphone, notifications, and media library.
+ * Hook to manage app permissions for microphone and notifications.
  * Handles permission requests and status tracking.
  */
 export function usePermissions() {
   const [permissions, setPermissions] = useState<PermissionsState>({
     microphone: 'undetermined',
     notifications: 'undetermined',
-    mediaLibrary: 'undetermined',
     isLoading: true,
     error: null,
   });
@@ -39,21 +36,18 @@ export function usePermissions() {
       setPermissions((prev) => ({ ...prev, isLoading: true, error: null }));
 
       // Check microphone permission
-      const micStatus = await Permissions.getAsync(Permissions.AUDIO);
+      const { status: micStatus } = await Permissions.askAsync(
+        Permissions.AUDIO
+      );
       
       // Check notifications permission
-      const notifStatus = await Permissions.getAsync(Permissions.NOTIFICATIONS);
-      
-      // Check media library permission (iOS only)
-      let mediaStatus: Permissions.PermissionStatus | undefined;
-      if (Platform.OS === 'ios') {
-        mediaStatus = await MediaLibrary.getPermissions();
-      }
+      const { status: notifStatus } = await Permissions.askAsync(
+        Permissions.NOTIFICATIONS
+      );
 
       setPermissions({
-        microphone: mapPermissionStatus(micStatus.status),
-        notifications: mapPermissionStatus(notifStatus.status),
-        mediaLibrary: mediaStatus ? mapPermissionStatus(mediaStatus.status) : 'granted',
+        microphone: mapPermissionStatus(micStatus),
+        notifications: mapPermissionStatus(notifStatus),
         isLoading: false,
         error: null,
       });
@@ -72,15 +66,15 @@ export function usePermissions() {
    */
   const requestMicrophonePermission = useCallback(async (): Promise<boolean> => {
     try {
-      const result = await Permissions.askAsync(Permissions.AUDIO);
-      const status = mapPermissionStatus(result.status);
+      const { status } = await Permissions.askAsync(Permissions.AUDIO);
+      const mappedStatus = mapPermissionStatus(status);
       
       setPermissions((prev) => ({
         ...prev,
-        microphone: status,
+        microphone: mappedStatus,
       }));
 
-      if (status === 'denied') {
+      if (mappedStatus === 'denied') {
         Alert.alert(
           'Microphone Permission Denied',
           'Jarvis needs microphone access to listen for voice commands. Please enable it in Settings.',
@@ -89,7 +83,7 @@ export function usePermissions() {
         return false;
       }
 
-      return status === 'granted';
+      return mappedStatus === 'granted';
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to request microphone permission';
       setPermissions((prev) => ({
@@ -105,15 +99,15 @@ export function usePermissions() {
    */
   const requestNotificationPermission = useCallback(async (): Promise<boolean> => {
     try {
-      const result = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-      const status = mapPermissionStatus(result.status);
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      const mappedStatus = mapPermissionStatus(status);
       
       setPermissions((prev) => ({
         ...prev,
-        notifications: status,
+        notifications: mappedStatus,
       }));
 
-      if (status === 'denied') {
+      if (mappedStatus === 'denied') {
         Alert.alert(
           'Notification Permission Denied',
           'Jarvis needs notification access to alert you about important events.',
@@ -122,46 +116,9 @@ export function usePermissions() {
         return false;
       }
 
-      return status === 'granted';
+      return mappedStatus === 'granted';
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to request notification permission';
-      setPermissions((prev) => ({
-        ...prev,
-        error: errorMessage,
-      }));
-      return false;
-    }
-  }, []);
-
-  /**
-   * Request media library permission (iOS only).
-   */
-  const requestMediaLibraryPermission = useCallback(async (): Promise<boolean> => {
-    if (Platform.OS !== 'ios') {
-      return true; // Not needed on Android
-    }
-
-    try {
-      const result = await MediaLibrary.requestPermissionsAsync();
-      const status = mapPermissionStatus(result.status);
-      
-      setPermissions((prev) => ({
-        ...prev,
-        mediaLibrary: status,
-      }));
-
-      if (status === 'denied') {
-        Alert.alert(
-          'Media Library Permission Denied',
-          'Jarvis needs access to your media library.',
-          [{ text: 'OK' }]
-        );
-        return false;
-      }
-
-      return status === 'granted';
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Failed to request media library permission';
       setPermissions((prev) => ({
         ...prev,
         error: errorMessage,
@@ -177,9 +134,8 @@ export function usePermissions() {
     try {
       const micResult = await requestMicrophonePermission();
       const notifResult = await requestNotificationPermission();
-      const mediaResult = await requestMediaLibraryPermission();
 
-      return micResult && notifResult && mediaResult;
+      return micResult && notifResult;
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to request permissions';
       setPermissions((prev) => ({
@@ -188,7 +144,7 @@ export function usePermissions() {
       }));
       return false;
     }
-  }, [requestMicrophonePermission, requestNotificationPermission, requestMediaLibraryPermission]);
+  }, [requestMicrophonePermission, requestNotificationPermission]);
 
   /**
    * Check if all critical permissions are granted.
@@ -196,8 +152,7 @@ export function usePermissions() {
   const allPermissionsGranted = useCallback((): boolean => {
     return (
       permissions.microphone === 'granted' &&
-      permissions.notifications === 'granted' &&
-      (Platform.OS === 'ios' ? permissions.mediaLibrary === 'granted' : true)
+      permissions.notifications === 'granted'
     );
   }, [permissions]);
 
@@ -205,11 +160,14 @@ export function usePermissions() {
    * Get a human-readable description of permission status.
    */
   const getPermissionDescription = useCallback((permission: keyof PermissionsState): string => {
+    if (permission === 'isLoading' || permission === 'error') {
+      return '';
+    }
+
     const status = permissions[permission];
     const names: Record<string, string> = {
       microphone: 'Microphone',
       notifications: 'Notifications',
-      mediaLibrary: 'Media Library',
     };
 
     const name = names[permission] || permission;
@@ -231,7 +189,6 @@ export function usePermissions() {
     checkPermissions,
     requestMicrophonePermission,
     requestNotificationPermission,
-    requestMediaLibraryPermission,
     requestAllPermissions,
     allPermissionsGranted,
     getPermissionDescription,

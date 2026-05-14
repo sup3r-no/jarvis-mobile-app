@@ -13,7 +13,6 @@ export default function PermissionsScreen() {
     requestAllPermissions,
     requestMicrophonePermission,
     requestNotificationPermission,
-    requestMediaLibraryPermission,
     allPermissionsGranted,
     getPermissionDescription,
   } = usePermissions();
@@ -48,11 +47,6 @@ export default function PermissionsScreen() {
   const handleRequestNotifications = async () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     await requestNotificationPermission();
-  };
-
-  const handleRequestMediaLibrary = async () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    await requestMediaLibraryPermission();
   };
 
   const getStatusColor = (status: string) => {
@@ -143,17 +137,7 @@ export default function PermissionsScreen() {
               colors={colors}
             />
 
-            {/* Media Library (iOS only) */}
-            <PermissionCard
-              icon="📸"
-              title="Media Library"
-              description="Access photos and media files"
-              status={permissions.mediaLibrary}
-              statusColor={getStatusColor(permissions.mediaLibrary)}
-              statusIcon={getStatusIcon(permissions.mediaLibrary)}
-              onPress={handleRequestMediaLibrary}
-              colors={colors}
-            />
+
           </View>
 
           {/* Request All Button */}
