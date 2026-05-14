@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Platform, Alert } from 'react-native';
+import { Alert } from 'react-native';
 
 export type PermissionStatus = 'granted' | 'denied' | 'undetermined';
 
@@ -12,7 +12,8 @@ export interface PermissionsState {
 
 /**
  * Hook to manage app permissions for microphone and notifications.
- * Simplified version that works with Expo's permission system.
+ * Simplified version that doesn't require expo-permissions package.
+ * In production, you would integrate with native permission APIs.
  */
 export function usePermissions() {
   const [permissions, setPermissions] = useState<PermissionsState>({
@@ -22,20 +23,21 @@ export function usePermissions() {
     error: null,
   });
 
-  // Check current permissions on mount
+  // Initialize permissions on mount
   useEffect(() => {
     checkPermissions();
   }, []);
 
   /**
    * Check the current status of all permissions.
+   * In a real app, this would query native permission APIs.
    */
   const checkPermissions = useCallback(async () => {
     try {
       setPermissions((prev) => ({ ...prev, isLoading: true, error: null }));
 
-      // On native platforms, permissions are typically requested when needed
-      // For now, set to undetermined until explicitly requested
+      // Simulate permission check - in production, use native APIs
+      // For now, assume permissions are undetermined until explicitly requested
       setPermissions({
         microphone: 'undetermined',
         notifications: 'undetermined',
@@ -54,15 +56,21 @@ export function usePermissions() {
 
   /**
    * Request microphone permission.
+   * In production, this would call native permission APIs.
    */
   const requestMicrophonePermission = useCallback(async (): Promise<boolean> => {
     try {
-      // In a real app, this would call the native permission API
-      // For now, simulate the permission request
+      // Simulate permission request
       setPermissions((prev) => ({
         ...prev,
         microphone: 'granted',
       }));
+
+      Alert.alert(
+        'Microphone Access',
+        'Jarvis will now have access to your microphone for voice commands.',
+        [{ text: 'OK' }]
+      );
 
       return true;
     } catch (error) {
@@ -77,15 +85,21 @@ export function usePermissions() {
 
   /**
    * Request notification permission.
+   * In production, this would call native permission APIs.
    */
   const requestNotificationPermission = useCallback(async (): Promise<boolean> => {
     try {
-      // In a real app, this would call the native permission API
-      // For now, simulate the permission request
+      // Simulate permission request
       setPermissions((prev) => ({
         ...prev,
         notifications: 'granted',
       }));
+
+      Alert.alert(
+        'Notification Access',
+        'Jarvis will now send you notifications about important events.',
+        [{ text: 'OK' }]
+      );
 
       return true;
     } catch (error) {
