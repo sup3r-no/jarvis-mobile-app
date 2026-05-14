@@ -93,7 +93,7 @@ export default function WiFiScannerScreen() {
   const renderDeviceItem = ({ item }: { item: WiFiDevice }) => (
     <TouchableOpacity
       onPress={() => handleSelectDevice(item)}
-      style={({ pressed }: { pressed: boolean }) => [{ opacity: pressed ? 0.7 : 1 }]}
+      style={({ pressed }: { pressed: boolean }) => ({ opacity: pressed ? 0.7 : 1 })}
       className="bg-background rounded-lg p-4 border border-border mb-3 flex-row justify-between items-center"
     >
       <View className="flex-1">

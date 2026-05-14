@@ -81,9 +81,9 @@ export default function VoiceSettingsScreen() {
 
             <TouchableOpacity
               onPress={() => setShowVoiceModelPicker(!showVoiceModelPicker)}
-              style={({ pressed }: { pressed: boolean }) => [
-                { opacity: pressed ? 0.7 : 1 },
-              ]}
+              style={({ pressed }: { pressed: boolean }) => ({
+                opacity: pressed ? 0.7 : 1,
+              })}
               className="bg-background border border-border rounded-lg p-4 flex-row justify-between items-center"
             >
               <Text className="text-foreground font-medium">
