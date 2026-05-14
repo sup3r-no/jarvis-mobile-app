@@ -130,7 +130,7 @@ export default function WiFiScannerScreen() {
           <TouchableOpacity
             onPress={handleScanNetwork}
             disabled={isScanning}
-            style={({ pressed }) => [
+            style={({ pressed }: { pressed: boolean }) => [
               { 
                 backgroundColor: colors.primary,
                 opacity: pressed ? 0.8 : 1 
