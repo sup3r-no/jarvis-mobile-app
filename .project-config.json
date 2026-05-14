@@ -1,0 +1,51 @@
+{
+  "build_command": "pnpm run build",
+  "capabilities": [
+    "server",
+    "db",
+    "user"
+  ],
+  "dev_command": "pnpm run dev",
+  "env_vars": {
+    "DATABASE_URL": "mysql://3toh8jSn86aUvz5.39f1a48771c6:iPtu73gqTyzgv7jd698o@gateway05.us-east-1.prod.aws.tidbcloud.com:4000/HVW8LKzNnQRH2SAe8UbtZj?ssl={\"rejectUnauthorized\":true}"
+  },
+  "experiments": [
+    "no_db_push"
+  ],
+  "git_remote": {
+    "repo_url": "s3://vida-prod-gitrepo/webdev-git/310519663499294426/HVW8LKzNnQRH2SAe8UbtZj",
+    "access_key_id": "ASIAZV3A2ECZMHHTINLG",
+    "secret_access_key": "n6udpkOfZW4RlzLmgCDid4NHYDyjBrWeNQErCIJa",
+    "session_token": "IQoJb3JpZ2luX2VjEJz//////////wEaCXVzLWVhc3QtMSJHMEUCIQCiuLwxyF3tO5S61VKg6JKIctO6zXLxphzNbxkRfjrNtgIgLbGE2XunPHITl7FtxUwTQWPP7CZvRRiEu7d01Hg134kq9gMIZBAEGgw2NjUzODYwOTg4NjYiDGpZFXQLAOxLRP/9XirTA05n7wnJt8Tc/VDi3NzBG3Oy89hNPLeAzNR+FDRpy1rBUF+QjWhZl6X1YmedkPPcGgavWlg4U5HRg9hq+eqIolAKUV9HG7po8YOkNmPb5mZ7giXaK+i8ndXxzwJin36DABU8OWGuj5h8ApU2TsHFrjw8BaCfQnxJ6/T0GUzZek2VfRp5LSuKB0X9M4B+FurJ3ZrLt5FuUIwSP3VadDHsQSlPwUMpLqD5JevF5gejAwgnghPSGk4UJs3pl6ybNgqdUPHrV/y0kGjz7s8JjLlnjPQJMqQuL6aABz00KiM64hb6Zw5KnuykK63NTvkM3M/6uct90Ryx8yYo7yEWpHnZDX6CRWUGucPd4w+gfGocreFOWWsqE3OYesdFM7UYbBg+wH7k/0eQEa1XMKykv2PcNBoayl/l3znFWP4+9TEYrYDBjU6CvNx0SqgCpH+fKNj+ea95YILfPIG1F967bWhPFztzKScSCjq2hL81YcZCALWFzGQ5kBYaKFpw0k+LXRn7XPzVhRBh1QalmLPv/urRoS8zDe2l41AJw3VE7miKv2XHC2qsmu8oulrNQ6CseewNdEwsbsUSBWO+Bgu0Iwa8tpQfKChXAKpUvUePigvUQQ9nnq1zMKW/mNAGOp0BC12hG6r2H2TNxGhZrmI5XLnxeENxWc0pDphUj4PJfvOHHVtrlQRITGUU+lmE8hLT1TFz7k6k1i5FNIEnGI7HxV/GIGyp2WKZYglcIm2bmmt2+uHCCCGTchPW1CtP9UnD4mr2Z4e7VoENHlqUx3CNJxfuy7WdhXuFFw65L0GZczeA9+Eu4QVndJtoTvNN9KfFIdk13hH/E+K8PXp00Q==",
+    "expiration": "2026-05-15T07:16:53.000Z"
+  },
+  "name": "jarvis-mobile-app",
+  "path": "/home/ubuntu/jarvis-mobile-app",
+  "port": 3000,
+  "secrets": {
+    "BUILT_IN_FORGE_API_KEY": "nzTPZ6ojbexc2W8aEkTumt",
+    "BUILT_IN_FORGE_API_URL": "https://forge.manus.ai",
+    "EXPO_APP_QR_URL": "exps://8081-iuaj0fnsimobfv7meekis-3fd71564.us1.manus.computer",
+    "EXPO_PACKAGER_PROXY_URL": "https://8081-iuaj0fnsimobfv7meekis-3fd71564.us1.manus.computer",
+    "EXPO_PUBLIC_API_BASE_URL": "https://3000-iuaj0fnsimobfv7meekis-3fd71564.us1.manus.computer",
+    "EXPO_PUBLIC_OAUTH_PORTAL_URL": "https://manus.im",
+    "EXPO_PUBLIC_OAUTH_SERVER_URL": "https://api.manus.im",
+    "EXPO_PUBLIC_OWNER_NAME": "Super No",
+    "EXPO_PUBLIC_OWNER_OPEN_ID": "T8PMnCChfhD55zDPuArMsE",
+    "JWT_SECRET": "o8WsDcpcS5HhiW56MoEgDE",
+    "OAUTH_SERVER_URL": "https://api.manus.im",
+    "OWNER_NAME": "Super No",
+    "OWNER_OPEN_ID": "T8PMnCChfhD55zDPuArMsE",
+    "REACT_NATIVE_PACKAGER_HOSTNAME": "8081-iuaj0fnsimobfv7meekis-3fd71564.us1.manus.computer",
+    "VITE_ANALYTICS_ENDPOINT": "https://manus-analytics.com",
+    "VITE_ANALYTICS_WEBSITE_ID": "404bcd09-1913-4476-8016-b9fbe9f5645e",
+    "VITE_APP_ID": "HVW8LKzNnQRH2SAe8UbtZj",
+    "VITE_APP_LOGO": "",
+    "VITE_APP_TITLE": "J.A.R.V.I.S. Mobile App",
+    "VITE_FRONTEND_FORGE_API_KEY": "4mTNKo6NWYmBNWGs7WmCXb",
+    "VITE_FRONTEND_FORGE_API_URL": "https://forge.manus.ai",
+    "VITE_OAUTH_PORTAL_URL": "https://manus.im"
+  },
+  "template_id": "app",
+  "test_command": "pnpm test"
+}
