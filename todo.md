@@ -99,3 +99,21 @@
 ## Completed Items
 
 (Items marked as [x] will be tracked here)
+
+## Phase 11: Termux Backend Integration
+
+- [x] Create Termux backend HTTP server (termux_backend.py)
+- [x] Integrate with user's ai_agent.py for command processing
+- [x] Integrate with logic_core.py for device control
+- [ ] Integrate with find_samsung.py for device discovery
+- [x] Create API endpoints for mobile app communication
+- [ ] Test backend server with mobile app
+
+## Phase 12: Permission Handling
+
+- [x] Implement microphone permission request
+- [x] Implement notification permission request
+- [x] Implement media library permission request
+- [x] Create permission status display (Permissions screen)
+- [x] Handle permission denial gracefully
+- [ ] Test permissions on iOS and Android
