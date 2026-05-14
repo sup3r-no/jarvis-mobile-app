@@ -98,16 +98,12 @@ export default function VoiceSettingsScreen() {
                   <TouchableOpacity
                     key={model.value}
                     onPress={() => handleSelectVoiceModel(model.value)}
-                    style={({ pressed }: { pressed: boolean }) => [
-                      { opacity: pressed ? 0.7 : 1 },
-                      {
-                        backgroundColor:
-                          config.voiceModel === model.value
-                            ? colors.primary
-                            : colors.background,
-                      },
-                    ]}
-                    className="border border-border rounded-lg p-3"
+                    style={({ pressed }: { pressed: boolean }) => ({
+                      opacity: pressed ? 0.7 : 1,
+                    })}
+                    className={`border border-border rounded-lg p-3 ${
+                      config.voiceModel === model.value ? 'bg-primary' : ''
+                    }`}
                   >
                     <Text
                       className={

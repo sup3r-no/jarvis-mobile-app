@@ -1,4 +1,4 @@
-import { ScrollView, Text, View, TouchableOpacity, Alert, ActivityIndicator, FlatList } from 'react-native';
+import { ScrollView, Text, View, TouchableOpacity, ActivityIndicator, FlatList, Alert, StyleSheet } from 'react-native';
 import { ScreenContainer } from '@/components/screen-container';
 import { useJarvisConfig } from '@/hooks/use-jarvis-config';
 import { useColors } from '@/hooks/use-colors';
@@ -90,7 +90,7 @@ export default function WiFiScannerScreen() {
     return '📴';
   };
 
-  const renderDeviceItem = ({ item }: { item: WiFiDevice }): JSX.Element => (
+  const renderDeviceItem = ({ item }: { item: WiFiDevice }) => (
     <TouchableOpacity
       onPress={() => handleSelectDevice(item)}
       style={({ pressed }: { pressed: boolean }) => [{ opacity: pressed ? 0.7 : 1 }]}
